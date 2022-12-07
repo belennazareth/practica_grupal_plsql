@@ -11,3 +11,14 @@ Práctica grupal de pl/sql | restaurantes
 * [Script de Postgres](/recursos/script/Postgres)
 
 * [Script de Oracle](/recursos/script/Oracle)
+
+
+## Participantes
+
+* Capitán: Gonzalo Marín
+
+* Portavoz: Ángel Suárez
+
+* Secretaria: Belén Nazareth Durán
+
+* Facilitador: Roberto Rodríguez
