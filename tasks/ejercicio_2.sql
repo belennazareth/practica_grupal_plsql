@@ -1,0 +1,81 @@
+-- 2. Deseamos realizar, con el menor número posible de consultas a la base de datos, un 
+-- procedimiento llamado MostrarInformes que reciba cuatro parámetros. El primero será el tipo de 
+-- informe, el segundo un código de experimento y los dos últimos dependerán del tipo de informe.
+
+-- Informe Tipo 1: Los dos últimos parámetros estarán en blanco. Este informe mostrará todas las 
+-- puntuaciones que ha recibido un experimento, mostrando sus versiones ordenadas cronológicamente, 
+-- los aspectos de mayor a menor importancia y las puntuaciones de mayor a menor. El formato del 
+-- informe será el siguiente:
+
+-- ```sql
+-- Código Experimento: xxxxxxxxxxx Investigador Responsable: xxxxxxxxxxxxxx
+-- Versión1: xxxxxxxxxxxxxx
+-- Fecha Prueba: xx/xx/xxxx
+-- Código Aspecto1: xxxxxxxxxxx1
+-- NombreCatador1
+-- Importancia: xxxxxxxxxxxx
+-- Puntuación
+-- ...
+-- NombreCatadorN
+-- Puntuación
+-- Nota Media Aspecto xxxxxxxxxx1: n.nn
+-- …
+-- Código AspectoN: xxxxxxxxxxxN
+-- NombreCatador1
+-- Importancia: xxxxxxxxxxxx
+-- Puntuación
+-- ...
+-- NombreCatadorN
+-- Puntuación
+-- Nota Media Aspecto xxxxxxxxxxN: n.nn
+-- Puntuación Media Versión1: n.nn
+-- ...
+-- Versión2:
+-- …
+-- ```
+
+-- Informe Tipo 2: El tercer parámetro será un código de versión. Este informe mostrará todas las 
+-- puntuaciones que ha recibido una versión de un experimento, mostrando los aspectos de mayor a 
+-- menor importancia y las puntuaciones de mayor a menor. El formato del informe será el siguiente:
+
+-- ```sql
+-- Código Experimento: xxxxxxxxxxx Investigador Responsable: xxxxxxxxxxxxxx
+-- Versión: xxxxxxxxxxxxxx
+-- Fecha Prueba: xx/xx/xxxx
+-- Código Aspecto1: xxxxxxxxxxx1
+-- Importancia: xxxxxxxxxxxxNombreCatador1
+-- Puntuación
+-- ...
+-- NombreCatadorN
+-- Puntuación
+-- Nota Media Aspecto xxxxxxxxxx1: n.nn
+-- …
+-- Código AspectoN: xxxxxxxxxxxN
+-- NombreCatador1
+-- Importancia: xxxxxxxxxxxx
+-- Puntuación
+-- ...
+-- NombreCatadorN
+-- Puntuación
+-- Nota Media Aspecto xxxxxxxxxxN: n.nn
+-- Puntuación Media Versión: n.nn
+-- ```
+
+-- Informe Tipo 3: El tercer parámetro será un código de versión. El cuarto será un código de aspecto 
+-- Este informe mostrará todas las puntuaciones que ha recibido un aspecto de una versión de un 
+-- experimento, mostrando las puntuaciones de mayor a menor. El formato del informe será el siguiente:
+
+-- ```sql
+-- Código Experimento: xxxxxxxxxxx Investigador Responsable: xxxxxxxxxxxxxx
+-- Versión: xxxxxxxxxxxxxx
+-- Fecha Prueba: xx/xx/xxxx
+-- Código Aspecto1: xxxxxxxxxxx1
+-- NombreCatador1
+-- Importancia: xxxxxxxxxxxx
+-- Puntuación
+-- ...
+-- NombreCatadorN
+-- Puntuación
+-- Nota Media Aspecto xxxxxxxxxx1: n.nn
+-- ```
+
