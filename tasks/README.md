@@ -111,3 +111,5 @@
 
     [Resolución](/tasks/ejercicio_8.sql)
 
+
+![image](/images/esquema.png)
