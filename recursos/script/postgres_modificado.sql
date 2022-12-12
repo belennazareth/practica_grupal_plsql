@@ -118,7 +118,6 @@ create table Puntuaciones
 );
 
 
-
   insert into Ingredientes values('0001','Bacalao','Pescado');
   insert into Ingredientes values('0002','Patata','Hortaliza');
   insert into Ingredientes values('0003','Harina','Cereal');
