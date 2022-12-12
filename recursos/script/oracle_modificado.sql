@@ -344,4 +344,17 @@ insert into puntuaciones values('14425879A','0008','A0001-A','0.0.1',3);
 insert into puntuaciones values('52148637R','0008','A0001-A','0.0.2',1.7);
 insert into puntuaciones values('14425879A','0008','A0001-A','0.0.3',8.9);
 
+insert into puntuaciones values('22457825G','0005','A0002-A','0.0.1',3.2);
+insert into puntuaciones values('22457825G','0005','A0002-A','0.0.2',4.9);
+insert into puntuaciones values('14425879A','0006','A0002-A','0.0.1',2.7);
+insert into puntuaciones values('51478236G','0006','A0002-A','0.0.2',7.5);
+insert into puntuaciones values('52824638D','0007','A0002-A','0.0.1',6);
+insert into puntuaciones values('14425879A','0007','A0002-A','0.0.2',7);
+insert into puntuaciones values('14425879A','0008','A0002-A','0.0.1',3);
+insert into puntuaciones values('52148637R','0008','A0002-A','0.0.2',1.7);
+
+insert into puntuaciones values('14425879A','0001','A0003-A','0.0.1',2.5);
+insert into puntuaciones values('14425879A','0001','A0003-A','0.0.2',7.5);
+insert into puntuaciones values('51478236G','0002','A0003-A','0.0.1',1);
+
 commit;
