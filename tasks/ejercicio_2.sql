@@ -19,39 +19,7 @@ BEGIN
 END;
 /
 
-
--- Informe Tipo 1: Los dos últimos parámetros estarán en blanco. Este informe mostrará todas las 
--- puntuaciones que ha recibido un experimento, mostrando sus versiones ordenadas cronológicamente, 
--- los aspectos de mayor a menor importancia y las puntuaciones de mayor a menor. El formato del 
--- informe será el siguiente:
-
--- ```sql
--- Código Experimento: xxxxxxxxxxx Investigador Responsable: xxxxxxxxxxxxxx
--- Versión1: xxxxxxxxxxxxxx
--- Fecha Prueba: xx/xx/xxxx
--- Código Aspecto1: xxxxxxxxxxx1
--- NombreCatador1
--- Importancia: xxxxxxxxxxxx
--- Puntuación
--- ...
--- NombreCatadorN
--- Puntuación
--- Nota Media Aspecto xxxxxxxxxx1: n.nn
--- …
--- Código AspectoN: xxxxxxxxxxxN
--- NombreCatador1
--- Importancia: xxxxxxxxxxxx
--- Puntuación
--- ...
--- NombreCatadorN
--- Puntuación
--- Nota Media Aspecto xxxxxxxxxxN: n.nn
--- Puntuación Media Versión1: n.nn
--- ...
--- Versión2:
--- …
--- ```
-
+-- INFORMES
 -- Para el orden de importancia, creamos una tabla auxiliar con el nombre de cada importancia y un número - FALTA
 CREATE TABLE importancias (
     codigo varchar2(4),
@@ -59,6 +27,15 @@ CREATE TABLE importancias (
     numero  number(10),
     CONSTRAINT ck_importancias foreign key (codigo) references aspectos (codigo)
 );
+
+INSERT INTO importancias VALUES ('0001','Muy alta','1');
+INSERT INTO importancias VALUES ('0002','Alta','2');
+INSERT INTO importancias VALUES ('0003','Alta','2');
+INSERT INTO importancias VALUES ('0004','Media','3');
+INSERT INTO importancias VALUES ('0005','Media','3');
+INSERT INTO importancias VALUES ('0006','Muy alta','1');
+INSERT INTO importancias VALUES ('0007','Muy alta','1');
+INSERT INTO importancias VALUES ('0008','Baja','4');
 
 ------------------------------------------------------
 -- INFORME 1
@@ -92,7 +69,7 @@ END;
 -- Creamos un procedimiento que nos saque el código de aspecto junto con su importancia indicando el experimento y su versión
 CREATE OR REPLACE PROCEDURE aspectoimportancia(p_codigoexperimento experimentos.codigo%TYPE,p_codigoversion versiones.codigo%TYPE)
 IS
-    cursor c_aspectoimportancia is SELECT codigo,importancia FROM aspectos WHERE codigo IN (SELECT codigoaspecto FROM puntuaciones WHERE codigoexperimento=p_codigoexperimento AND codigoversion = p_codigoversion);
+    cursor c_aspectoimportancia is SELECT codigo,importancia FROM importancias WHERE codigo IN (SELECT codigoaspecto FROM puntuaciones WHERE codigoexperimento=p_codigoexperimento AND codigoversion = p_codigoversion) ORDER BY numero asc;
     v_contaspecto number:=0;
 BEGIN
     for var in c_aspectoimportancia loop
@@ -150,34 +127,8 @@ BEGIN
     return v_total;
 END;
 /
-
--- Informe Tipo 2: El tercer parámetro será un código de versión. Este informe mostrará todas las 
--- puntuaciones que ha recibido una versión de un experimento, mostrando los aspectos de mayor a 
--- menor importancia y las puntuaciones de mayor a menor. El formato del informe será el siguiente:
-
--- ```sql
--- Código Experimento: xxxxxxxxxxx Investigador Responsable: xxxxxxxxxxxxxx
--- Versión: xxxxxxxxxxxxxx
--- Fecha Prueba: xx/xx/xxxx
--- Código Aspecto1: xxxxxxxxxxx1
--- Importancia: xxxxxxxxxxxxNombreCatador1
--- Puntuación
--- ...
--- NombreCatadorN
--- Puntuación
--- Nota Media Aspecto xxxxxxxxxx1: n.nn
--- …
--- Código AspectoN: xxxxxxxxxxxN
--- NombreCatador1
--- Importancia: xxxxxxxxxxxx
--- Puntuación
--- ...
--- NombreCatadorN
--- Puntuación
--- Nota Media Aspecto xxxxxxxxxxN: n.nn
--- Puntuación Media Versión: n.nn
--- ```
-
+------------------------------------------------------
+-- INFORME 2
 -- Creamos el procedimiento principal del tipo de informe 2
 CREATE OR REPLACE PROCEDURE informe2 (p_codigoexperimento experimentos.codigo%TYPE, p_codversion versiones.codigo%TYPE)
 IS
@@ -202,25 +153,8 @@ BEGIN
     end loop;
 END;
 /
-
--- Informe Tipo 3: El tercer parámetro será un código de versión. El cuarto será un código de aspecto 
--- Este informe mostrará todas las puntuaciones que ha recibido un aspecto de una versión de un 
--- experimento, mostrando las puntuaciones de mayor a menor. El formato del informe será el siguiente:
-
--- ```sql
--- Código Experimento: xxxxxxxxxxx Investigador Responsable: xxxxxxxxxxxxxx
--- Versión: xxxxxxxxxxxxxx
--- Fecha Prueba: xx/xx/xxxx
--- Código Aspecto1: xxxxxxxxxxx1
--- NombreCatador1
--- Importancia: xxxxxxxxxxxx
--- Puntuación
--- ...
--- NombreCatadorN
--- Puntuación
--- Nota Media Aspecto xxxxxxxxxx1: n.nn
--- ```
-
+------------------------------------------------------
+-- INFORME 3
 -- Creamos el procedimiento principal del tipo de informe 3
 CREATE OR REPLACE PROCEDURE informe3 (p_codigoexperimento experimentos.codigo%TYPE, p_codversion versiones.codigo%TYPE, p_codaspecto aspectos.codigo%TYPE)
 IS
