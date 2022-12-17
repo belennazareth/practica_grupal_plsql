@@ -75,7 +75,6 @@ end;
 
 
 -- PRUEBAS DE FUNCIONAMIENTO
--- el 15 (platano esta 2 veces en el a0002-a, 0.0.2)
 create or replace procedure prueba_1(p_exp Experimentos.Codigo%type, p_ver Versiones.Codigo%type, p_ing Ingredientes.Nombre%type)
 is
     v_cantidad number;
