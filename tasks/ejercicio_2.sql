@@ -20,7 +20,7 @@ END;
 /
 
 -- INFORMES
--- Para el orden de importancia, creamos una tabla auxiliar con el nombre de cada importancia y un número
+-- Para el orden de importancia, creamos una tabla auxiliar con el nombre de cada importancia y un número 
 CREATE TABLE importancias (
     codigo varchar2(4),
     importancia varchar(20),
