@@ -28,7 +28,10 @@ begin
             v_total := v_total+v_cantidad;
     end if;
     return v_cantidad;
-    
+exception
+    when no_data_found then
+        dbms_output.put_line('No se ha encontrado ningun ingrediente con ese nombre');
+        return 0;
 end;
 /
 
