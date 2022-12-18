@@ -29,3 +29,21 @@ end;
 /
 
 
+create or replace procedure comprobar_investigadores (p_codigoexperimento in puntuaciones.codigoexperimento%type, p_codigoversion in puntuaciones.codigoversion%type)
+is
+  v_num_investigadores number;
+
+begin
+
+    select codigoexperimento, codigoversion into p_codigoexperimento, p_codigoversion from puntuaciones;
+    
+    select count(*) into v_num_investigadores from puntuaciones where codigoexperimento = p_codigoexperimento and codigoversion = p_codigoversion;
+    
+    if v_num_investigadores > 5 then
+        
+        if comprobar_ingredientes (p_codigoversion, p_codigoexperimento) < 3 then
+            raise_application_error(-20001, 'No se pueden añadir más investigadores a esta versión del experimento');
+        
+        end if;
+end;
+/
