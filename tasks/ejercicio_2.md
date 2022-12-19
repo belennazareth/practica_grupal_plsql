@@ -196,10 +196,13 @@ END;
 /
 ```
 Informe de tipo 1
+
 ![Comprobación informe 1 ](img/ejercicio2/informe1.png)
 
 Informe de tipo 2
+
 ![Comprobación informe 2 ](img/ejercicio2/informe2.png)
 
 Informe de tipo 3
+
 ![Comprobación informe 3 ](img/ejercicio2/informe3.png)
