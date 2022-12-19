@@ -1,6 +1,6 @@
 -- 3. Realiza un trigger que impida que se pruebe una versión de un experimento antes de
 -- que éste comience o después de que termine.
-
+```sql
 create or replace trigger ejercicio3 before insert or update on Versiones for each row
 declare
 l_fechainicio experimentos.fechainicio%type;
@@ -16,3 +16,5 @@ select fechafin into l_fechafin from Experimentos where codigo = :new.codigoexpe
     end if;
 end ejercicio3;
 /
+
+```
