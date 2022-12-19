@@ -29,6 +29,6 @@ for each row
     execute procedure funcion_programada();
 ```
 
-Comprobación:
-Primero ejecutamos el procedimiento que añade la puntuacion media de los experimentos a la nueva columna de la tabla versiones y luego probamos actualizando todos los datos de la tabla puntuaciones de un experimento concreto para que su media sea 7, y al listar las puntuaciones medias de la tabla versiones vemos que se ha actualizado automáticamente
-![Comprobación ejercicio 5](img/ejercicio5.png)
+Comprobación: Actualizamos una versión de un experimento en concreto y cambiamos el DNI del actual colaborador por el DNI del responsable de ese experimento y nos salta el trigger
+
+![Comprobación ejercicio 7 POSTGRES ](img/ejercicio7postgres.png)
