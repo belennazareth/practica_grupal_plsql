@@ -1,3 +1,4 @@
+```sql
 -- 2. Deseamos realizar, con el menor número posible de consultas a la base de datos, un 
 -- procedimiento llamado MostrarInformes que reciba cuatro parámetros. El primero será el tipo de 
 -- informe, el segundo un código de experimento y los dos últimos dependerán del tipo de informe.
@@ -193,3 +194,12 @@ BEGIN
     end loop;
 END;
 /
+```
+Informe de tipo 1
+![Comprobación informe 1 ](img/ejercicio2/informe1.png)
+
+Informe de tipo 2
+![Comprobación informe 2 ](img/ejercicio2/informe2.png)
+
+Informe de tipo 3
+![Comprobación informe 3 ](img/ejercicio2/informe3.png)
