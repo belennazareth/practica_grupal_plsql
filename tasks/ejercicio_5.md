@@ -1,3 +1,4 @@
+``` sql
 -- 5. Añade una columna llamada PuntuaciónMedia a la tabla Versiones. Rellénala mediante un 
 -- procedimiento PL/SQL a partir de las notas existentes en la tabla Puntuaciones y realiza los módulos 
 -- de programación necesarios para mantener la columna debidamente actualizada cuando la tabla 
@@ -50,3 +51,8 @@ BEGIN
     obtenercodigoexperimento;
 END;
 /
+```
+
+Comprobación:
+Primero ejecutamos el procedimiento que añade la puntuacion media de los experimentos a la nueva columna de la tabla versiones y luego probamos actualizando todos los datos de la tabla puntuaciones de un experimento concreto para que su media sea 7, y al listar las puntuaciones medias de la tabla versiones vemos que se ha actualizado automáticamente
+![Comprobación ejercicio 5](img/ejercicio5.png)
