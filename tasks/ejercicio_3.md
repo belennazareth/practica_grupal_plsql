@@ -18,3 +18,6 @@ end ejercicio3;
 /
 
 ```
+Comprobación:
+
+![Comprobación ejercicio 3](img/3.png)
