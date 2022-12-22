@@ -4,7 +4,7 @@
 
 Para poder enviar correos electrónicos desde Oracle, se ha tenido que realizar una configuración previa, para ello, se ha tenido que ejecutar los siguientes comandos en la consola de Oracle como usuario sys:
 
-```
+```sql
 @$ORACLE_HOME/rdbms/admin/utlmail.sql
 
 @$ORACLE_HOME/rdbms/admin/prvtmail.plb
@@ -14,7 +14,7 @@ ALTER SYSTEM SET smtp_out_server='localhost' SCOPE=BOTH;
 BEGIN
   DBMS_NETWORK_ACL_ADMIN.CREATE_ACL(
     acl => 'aclemail.xml',
-    description => 'Send emails',
+    description => 'enviar correos',
     principal => 'NAZARETH',
     is_grant => true,
     privilege => 'connect',
@@ -40,7 +40,9 @@ grant execute on UTL_MAIL to NAZARETH;
 
 ```
 
-```
+Para enviar un correo de prueba se ha tenido que ejecutar el siguiente código donde se ha tenido que introducir el correo electrónico del remitente y del destinatario además del asunto y el mensaje para poder enviarlo:
+
+```sql
 BEGIN
   UTL_MAIL.SEND (
     sender => 'belennazareth29@gmail.com',
@@ -136,8 +138,36 @@ end;
 /
 ```
 
-Es necesario crear un procedimiento (enviar_correo) para que al introducirlo en el trigger se pueda enviar el correo electrónico.
+Es necesario crear un procedimiento (enviar_correo) para que al introducirlo en el trigger se pueda enviar el correo electrónico. Este procedimiento recibe el correo electrónico del remitente, el correo electrónico del destinatario, el asunto, el mensaje y el host del servidor de correo. El host del servidor de correo se ha tenido que poner en el archivo tnsnames.ora para que se pueda conectar con el servidor de correo. 
+El procedimiento se ha creado en el esquema NAZARETH para que se pueda ejecutar desde el trigger, usando utl smtp que es un paquete de Oracle que permite enviar correos electrónicos y elaborando un formato usando la función ltrim y rtrim para eliminar los espacios en blanco del host del servidor de correo. 
+En mesg se ha creado el mensaje que se va a enviar en el correo electrónico, en este caso se ha usado el formato de correo electrónico que se usa en el protocolo **SMTP** (protocolo de transferencia de correo electrónico).
+Se ha usado el método open_connection para abrir la conexión con el servidor de correo y el método send para enviar el correo electrónico:
 
+
+```sql
+create or replace procedure enviar_correo(p_envia IN VARCHAR2, p_recibe IN VARCHAR2, p_asunto IN VARCHAR2, p_mensaje IN VARCHAR2, p_host IN VARCHAR2) 
+IS 
+  mailhost     VARCHAR2(80) := ltrim(rtrim(p_host)); 
+  mail_conn    utl_smtp.connection;  
+   
+  crlf VARCHAR2( 2 ):= CHR( 13 ) || CHR( 10 ); 
+  mesg VARCHAR2( 1000 ); 
+BEGIN 
+  mail_conn := utl_smtp.open_connection(mailhost, 25); 
+  mesg:= 'Date: ' || TO_CHAR( SYSDATE, 'dd Mon yy hh24:mi:ss' ) || crlf || 
+         'From:  <'||p_envia||'>' || crlf || 
+         'Subject: '||p_asunto|| crlf || 
+         'To: '||p_recibe || crlf || 
+         '' || crlf || p_mensaje; 
+ 
+  utl_smtp.helo(mail_conn, mailhost); 
+  utl_smtp.mail(mail_conn, p_envia);  
+  utl_smtp.rcpt(mail_conn, p_recibe); 
+  utl_smtp.data(mail_conn, mesg);   
+  utl_smtp.quit(mail_conn);         
+END; 
+/
+```
 
 En el siguiente trigger se comprueba si la puntuación es menor de 5, si es así, se obtienen los datos necesarios para enviar el correo electrónico y se envían tanto el email como la fecha de la prueba, el aspecto valorado y la dirección de la vivienda del catador:
 
@@ -158,7 +188,9 @@ begin
         v_fecha := obtenerFechaPrueba(new.CodigoVersion);
         v_aspecto := obtenerAspecto(new.CodigoAspecto);
         v_vivienda_catador := obtenerViviendaCatador(new.NIFCatador);
-            
+        
+        enviar_correo('nazareth@localhost', v_email, 'Puntuación menor de 5', 'La puntuación de la prueba '||v_fecha||' del aspecto '||v_aspecto||' del catador '||new.NIFCatador||' que vive en '||v_vivienda_catador||' es menor de 5', 'localhost');
+
     end if;
 
 end
