@@ -1,9 +1,7 @@
+-- 7. Realiza los módulos de programación necesarios para evitar que un investigador figure como colaborador de un experimento del que es responsable.
 
-```sql
--- 7. Realiza los módulos de programación necesarios para evitar que un investigador figure como 
--- colaborador de un experimento del que es responsable.
-
--- Programamos una función que es la que queremos que ejecute el trigger
+Programamos una función que es la que queremos que ejecute el trigger
+``` sql
 CREATE FUNCTION funcion_programada()
     RETURNS trigger AS
 $BODY$
@@ -20,8 +18,10 @@ BEGIN
 END;
 $BODY$
 LANGUAGE plpgsql;
+```
 
--- Definimos el trigger en la tabla que queremos que se ejecute
+Definimos el trigger en la tabla que queremos que se ejecute
+``` sql
 create trigger ejercicio7 
 before insert or update 
 on colaboraciones 
