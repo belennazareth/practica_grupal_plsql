@@ -2,6 +2,8 @@
 
 ---
 
+Para poder enviar correos electrónicos desde Oracle, se ha tenido que realizar una configuración previa, para ello, se ha tenido que ejecutar los siguientes comandos en la consola de Oracle como usuario sys:
+
 ```
 @$ORACLE_HOME/rdbms/admin/utlmail.sql
 
@@ -38,7 +40,6 @@ grant execute on UTL_MAIL to NAZARETH;
 
 ```
 
-
 ```
 BEGIN
   UTL_MAIL.SEND (
@@ -50,6 +51,7 @@ BEGIN
 END;
 /
 ```
+
 ---
 
 
@@ -134,6 +136,9 @@ end;
 /
 ```
 
+Es necesario crear un procedimiento (enviar_correo) para que al introducirlo en el trigger se pueda enviar el correo electrónico.
+
+
 En el siguiente trigger se comprueba si la puntuación es menor de 5, si es así, se obtienen los datos necesarios para enviar el correo electrónico y se envían tanto el email como la fecha de la prueba, el aspecto valorado y la dirección de la vivienda del catador:
 
 ```sql
@@ -153,9 +158,7 @@ begin
         v_fecha := obtenerFechaPrueba(new.CodigoVersion);
         v_aspecto := obtenerAspecto(new.CodigoAspecto);
         v_vivienda_catador := obtenerViviendaCatador(new.NIFCatador);
-        
-        call enviar_correo(email, 'Puntuación menor de 5', concat('La puntuación de la prueba ', new.id_prueba, ' es menor de 5'));
-    
+            
     end if;
 
 end
