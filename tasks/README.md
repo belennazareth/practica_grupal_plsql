@@ -4,7 +4,7 @@
 
 1. **Realiza una función que reciba un código de experimento, un código de versión y el nombre de un ingrediente y muestre la cantidad total del ingrediente necesario para una versión. Debes tener en cuenta que el ingrediente puede usarse como base de otros ingredientes preparados y/o directamente en la versión del experimento. Debes contemplar las siguientes excepciones: Experimento inexistente, Versión inexistente para ese experimento e Ingrediente no empleado en dicha versión.**
 
-    [Resolución](/tasks/ejercicio_1.sql)
+    [Resolución](/tasks/ejercicio_1.md)
 
 
 2. **Deseamos realizar, con el menor número posible de consultas a la base de datos, un procedimiento llamado MostrarInformes que reciba cuatro parámetros. El primero será el tipo de informe, el segundo un código de experimento y los dos últimos dependerán del tipo de informe.**
@@ -79,37 +79,37 @@
     Nota Media Aspecto xxxxxxxxxx1: n.nn
     ```
 
-    [Resolución](/tasks/ejercicio_2.sql)
+    [Resolución](/tasks/ejercicio_2.md)
 
 
 3. **Realiza un trigger que impida que se pruebe una versión de un experimento antes de que éste comience o después de que termine.**
 
-    [Resolución](/tasks/ejercicio_3.sql)
+    [Resolución](/tasks/ejercicio_3.md)
 
 
 4. **Realiza un trigger que cada vez que se inserte una puntuación menor de 5, informe de este hecho por correo electrónico al investigador responsable del experimento, incluyendo en el correo la fecha de la prueba, el aspecto valorado y donde vive el catador.**
 
-    [Resolución](/tasks/ejercicio_4.sql)
+    [Resolución](/tasks/ejercicio_4.md)
 
 
 5. **Añade una columna llamada PuntuaciónMedia a la tabla Versiones. Rellénala mediante un procedimiento PL/SQL a partir de las notas existentes en la tabla Puntuaciones y realiza los módulos de programación necesarios para mantener la columna debidamente actualizada cuando la tabla Puntuaciones sufra algún cambio con el mínimo consumo de recursos posible (esto es, realizando el menor número posible de cálculos).**
 
-    [Resolución](/tasks/ejercicio_5.sql)
+    [Resolución](/tasks/ejercicio_5.md)
 
 
 6. **Realiza los módulos de programación necesarios para evitar que un catador puntue más de tres aspectos de una misma versión de un experimento.**
 
-    [Resolución](/tasks/ejercicio_6.sql)
+    [Resolución](/tasks/ejercicio_6.md)
 
 
 7. **Realiza los módulos de programación necesarios para evitar que un investigador figure como colaborador de un experimento del que es responsable.**
 
-    [Resolución](/tasks/ejercicio_7.sql)
+    [Resolución](/tasks/ejercicio_7.md)
 
 
 8. **Realiza los módulos de programación necesarios para evitar que una versión de un experimento tenga colaborando más de cinco investigadores si usa menos de tres ingredientes elaborados a partir de otros.**
 
-    [Resolución](/tasks/ejercicio_8.sql)
+    [Resolución](/tasks/ejercicio_8.md)
 
 
 ![image](/images/esquema.png)
