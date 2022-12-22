@@ -1,4 +1,4 @@
-8. Realiza los módulos de programación necesarios para evitar que una versión de un experimento tenga colaborando más de cinco investigadores si usa menos de tres ingredientes elaborados a partir de otros.
+-- 8. Realiza los módulos de programación necesarios para evitar que una versión de un experimento tenga colaborando más de cinco investigadores si usa menos de tres ingredientes elaborados a partir de otros.
 
 Primero se ha realizado la función que comprueba si una versión del experimento tiene menos de 3 ingredientes teniendo en cuenta los ingredientes que se han elaborado a partir de otros, usando de parametros de entrada el codigo de la version y el codigo del experimento haciendo uso de un cursor para recorrer los ingredientes de la version y un cursor anidado para recorrer los ingredientes que se han elaborado a partir de otros. La función devuelve el numero de ingredientes que tiene la version:
 
