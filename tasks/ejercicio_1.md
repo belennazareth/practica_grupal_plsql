@@ -1,9 +1,6 @@
--- 1. Realiza una función que reciba un código de experimento, un código de versión y el nombre de un
--- ingrediente y muestre la cantidad total del ingrediente necesario para una versión. Debes tener en
--- cuenta que el ingrediente puede usarse como base de otros ingredientes preparados y/o directamente
--- en la versión del experimento. Debes contemplar las siguientes excepciones: Experimento inexistente,
--- Versión inexistente para ese experimento e Ingrediente no empleado en dicha versión.
+1. Realiza una función que reciba un código de experimento, un código de versión y el nombre de un ingrediente y muestre la cantidad total del ingrediente necesario para una versión. Debes tener en cuenta que el ingrediente puede usarse como base de otros ingredientes preparados y/o directamente en la versión del experimento. Debes contemplar las siguientes excepciones: Experimento inexistente Versión inexistente para ese experimento e Ingrediente no empleado en dicha versión.
 
+```sql
 CREATE OR REPLACE FUNCTION cantidad_ingrediente(p_exp Experimentos.Codigo%type, p_ver Versiones.Codigo%type, p_ing Ingredientes.Nombre%type)
 return number
 is
@@ -34,8 +31,11 @@ exception
         return 0;
 end;
 /
+```
 
--- Funcion que devuelva la cantidad de ingredientes base necesarios para hacer 1 unidad de un ingrediente preparado
+Ahora creo una función que devuelva la cantidad de ingredientes base necesarios para hacer 1 ingrediente preparado:
+
+```sql
 CREATE OR REPLACE FUNCTION cantidad_base_prep(p_exp Experimentos.Codigo%type, p_ver Versiones.Codigo%type, p_cod_ing Ingredientes.Codigo%type)
 return number
 is
@@ -53,7 +53,11 @@ begin
     return v_total;
 end;
 /
+```
 
+Finalmente, creo un procedimiento para controlar las excepciones:
+
+```sql
 create or replace procedure excepciones_ingredientes(p_exp Experimentos.Codigo%type, p_ver Versiones.Codigo%type, p_cod_ing Ingredientes.Codigo%type)
 is
     p_numero number;
@@ -75,9 +79,11 @@ begin
     end if;
 end;
 /
+```
 
+Para comprobar el funcionamiento de la función, creo un procedimiento de prueba:
 
--- PRUEBAS DE FUNCIONAMIENTO
+```sql
 create or replace procedure prueba_1(p_exp Experimentos.Codigo%type, p_ver Versiones.Codigo%type, p_ing Ingredientes.Nombre%type)
 is
     v_cantidad number;
@@ -89,4 +95,12 @@ end;
 
 -- ejecucion de ejemplo
 exec prueba_1('A0002-A','0.0.2','Platano');
+```
 
+![imagen 1](img/ejercicio1/1-1.png)
+
+También probamos las excepciones:
+
+![imagen 2](img/ejercicio1/1-2.png)
+![imagen 3](img/ejercicio1/1-3.png)
+![imagen 4](img/ejercicio1/1-4.png)
