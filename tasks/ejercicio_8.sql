@@ -63,7 +63,7 @@ begin
     
     if v_num_investigadores > 4 and comprobar_ingredientes (p_codigoversion, p_codigoexperimento) < 3 then
         
-        raise_application_error(-20001, 'No se pueden añadir más investigadores a esta versión del experimento');
+        raise_application_error(-20001, 'No se pueden añadir más investigadores a esta versión del experimento ');
     
     end if;
 end;
