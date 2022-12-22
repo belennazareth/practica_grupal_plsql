@@ -105,7 +105,6 @@ CREATE OR REPLACE FUNCTION NumeroPuntuacionesCatador
 RETURN NUMBER
 IS
     v_NumeroPuntuaciones NUMBER:= 0;
-    v_cantidad NUMBER;
 BEGIN
     if ControlPuntuaciones.PuntuacionesCatador.FIRST is null then
         return 0;
