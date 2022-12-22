@@ -1,5 +1,9 @@
 -- 4. Realiza un trigger que cada vez que se inserte una puntuación menor de 5, informe de este hecho por correo electrónico al investigador responsable del experimento, incluyendo en el correo la fecha de la prueba, el aspecto valorado y donde vive el catador.
 
+---
+
+---
+
 
 Lo primero será alterar la tabla de investigadores para que tenga un correo electrónico, para ello:
 
@@ -17,15 +21,13 @@ update investigadores set email='belennazareth29@gmail.com' where NIF='52146359T
 ```
 
 
-
-
+Se ha creado una función que recibe el código del experimento y devuelve el correo electrónico del investigador que lo ha creado para obtenerlo en el trigger:
 
 ```sql
-
 create or replace function conseguirEmailInvestigador(p_CodigoExperimento experimentos.Codigo%type)
 return varchar2
 is
-    v_email varchar2(50);
+    v_email investigadores.email%type;
 begin
     select email into v_email 
     from investigadores 
@@ -35,20 +37,89 @@ begin
     return v_email;
 end;
 /
+```
+
+Se ha creado una función que recibe el código de la versión y devuelve la fecha de la prueba, con esto se podrá enviar un correo con la fecha de la prueba en la que se ha obtenido una puntuación menor de 5:
+
+```sql
+create or replace function obtenerFechaPrueba(p_codigoVersion Versiones.Codigo%type)
+return date
+is
+    v_fecha versiones.FechaPrueba%type;
+begin
+    select FechaPrueba into v_fecha 
+    from versiones 
+    where codigo = p_codigoVersion;
+    return v_fecha;
+end;
+/
+```
+
+La siguiente función recibe el código del aspecto y devuelve la descripción del mismo:
+
+```sql
+create or replace function obtenerAspecto(p_codigoAspecto Aspectos.Codigo%type)
+return varchar2
+is
+    v_aspecto aspectos.Descripcion%type;
+begin
+    select Descripcion into v_aspecto 
+    from aspectos 
+    where codigo = p_codigoAspecto;
+    return v_aspecto;
+end;
+/
+```
+
+La siguiente función recibe el NIF del catador y devuelve la dirección de su vivienda:
+
+```sql
+create or replace function obtenerViviendaCatador(p_nifCatador Catadores.NIF%type)
+return varchar2
+is
+    v_vivienda_catador catadores.Direccion%type;
+begin
+    select Direccion into v_vivienda_catador 
+    from catadores 
+    where NIF = p_nifCatador;
+    return v_vivienda_catador;
+end;
+/
+```
+
+```sql
+create or replace procedure enviar_correo(p_email varchar2, p_asunto varchar2, p_mensaje varchar2)
+is
+begin
+    dbms_mail.send(
+        to_list => p_email,
+        subject => p_asunto,
+        message => p_mensaje
+    );
+
+end;
+/
+```
 
 
-
+```sql
 create trigger puntuacion_menor_5
 after insert or update on Puntuaciones
 for each row
 
 declare
-    v_email varchar2(50);
+    v_email investigadores.email%type;
+    v_fecha versiones.FechaPrueba%type;
+    v_aspecto aspectos.Descripcion%type;
+    v_vivienda_catador catadores.Direccion%type;
 begin
 
     if new.valor < 5 then
         v_email := conseguirEmailInvestigador(new.CodigoExperimento);
-
+        v_fecha := obtenerFechaPrueba(new.CodigoVersion);
+        v_aspecto := obtenerAspecto(new.CodigoAspecto);
+        v_vivienda_catador := obtenerViviendaCatador(new.NIFCatador);
+        
         call enviar_correo(email, 'Puntuación menor de 5', concat('La puntuación de la prueba ', new.id_prueba, ' es menor de 5'));
     
     end if;
