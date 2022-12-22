@@ -2,6 +2,54 @@
 
 ---
 
+```
+@$ORACLE_HOME/rdbms/admin/utlmail.sql
+
+@$ORACLE_HOME/rdbms/admin/prvtmail.plb
+
+ALTER SYSTEM SET smtp_out_server='localhost' SCOPE=BOTH;
+
+BEGIN
+  DBMS_NETWORK_ACL_ADMIN.CREATE_ACL(
+    acl => 'aclemail.xml',
+    description => 'Send emails',
+    principal => 'NAZARETH',
+    is_grant => true,
+    privilege => 'connect',
+    start_date => SYSTIMESTAMP,
+    end_date => NULL
+  );
+  COMMIT;
+END;
+/
+
+BEGIN
+  DBMS_NETWORK_ACL_ADMIN.ASSIGN_ACL (
+    acl => 'aclemail.xml',
+    host => '*',
+    lower_port => NULL,
+    upper_port => NULL
+  );
+  COMMIT;
+END;
+/
+
+grant execute on UTL_MAIL to NAZARETH;
+
+```
+
+
+```
+BEGIN
+  UTL_MAIL.SEND (
+    sender => 'belennazareth29@gmail.com',
+    recipients => 'belennazareth29@gmail.com',
+    subject => 'Pruebesita',
+    message => 'Correito de prueba'
+  );
+END;
+/
+```
 ---
 
 
@@ -19,7 +67,6 @@ update investigadores set email='pedro@gmail.com' where NIF='41254785F';
 update investigadores set email='rosa@gmail.com' where NIF='48521484V';
 update investigadores set email='belennazareth29@gmail.com' where NIF='52146359T';
 ```
-
 
 Se ha creado una función que recibe el código del experimento y devuelve el correo electrónico del investigador que lo ha creado para obtenerlo en el trigger:
 
@@ -87,20 +134,7 @@ end;
 /
 ```
 
-```sql
-create or replace procedure enviar_correo(p_email varchar2, p_asunto varchar2, p_mensaje varchar2)
-is
-begin
-    dbms_mail.send(
-        to_list => p_email,
-        subject => p_asunto,
-        message => p_mensaje
-    );
-
-end;
-/
-```
-
+En el siguiente trigger se comprueba si la puntuación es menor de 5, si es así, se obtienen los datos necesarios para enviar el correo electrónico y se envían tanto el email como la fecha de la prueba, el aspecto valorado y la dirección de la vivienda del catador:
 
 ```sql
 create trigger puntuacion_menor_5
@@ -126,3 +160,4 @@ begin
 
 end
 ```
+
