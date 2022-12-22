@@ -12,6 +12,10 @@ Práctica grupal de pl/sql | restaurantes
 
 * [Script de Oracle](/recursos/script/Oracle)
 
+Ejercicios:
+
+* []
+
 
 ## Participantes
 
